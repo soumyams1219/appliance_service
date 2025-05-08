@@ -1,0 +1,7 @@
+create a scheduling form when clicking accept in administrator login
+with date, time, service addreess with pincode(editable)
+select technician
+display product,issue
+submit form
+
+check progress bar design

@@ -1,0 +1,41 @@
+{% extends 'technician/base.html' %}
+{% load static %}
+{% block title %}
+<title>welcome</title>
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Scheduled Service Requests</h2>
+
+    {% if schedules %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>sl No</th>
+                    <th>Service Address</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for schedule in schedules %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ schedule.service_address }}</td>
+                    <td>{{ schedule.schedule_date }}</td>
+                    <td>{{ schedule.start_time }}</td>
+                    <td>{{ schedule.end_time }}</td>
+                    <td>{% if schedule.service.status == 'completed' %}<input type="button" class="btn btn-success" value="Finished">{% else %}<a href="{% url 'technician:finish-request' schedule.service.id %}"><input type="button" class="btn btn-warning" value="Finish"></a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div>No scheduled requests found.</div>
+    {% endif %}
+</div>
+{% endblock %}

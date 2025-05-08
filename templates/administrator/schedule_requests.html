@@ -1,0 +1,66 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% block title %}
+<title>Welcome</title>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+{% for msg in messages %}
+<script>
+  alert('{{msg}}');
+</script>
+{% endfor %}
+{% endif %}
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">Schedule Service Requests</h3>
+    <div class="row g-4">
+      {% if requests %}
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Request - {{requests.issue}}</h5>
+              <p><strong>Product:</strong> {{ requests.product }} </p>
+              <p><strong>Customer:</strong> {{requests.customer.user_id.first_name}}</p>
+              <p><strong>Service address:</strong> {{requests.customer.address}}, {{requests.customer.pincode}}</p>
+              <p><strong>Status:</strong> {{ requests.status }}</p>
+
+              <form method="post" action="{% url 'administrator:schedule-request' %}">
+                {% csrf_token %}
+                <input type="hidden" name="service_request_id" value="{{ requests.id }}">
+                <div class="mb-3">
+                    <label class="form-label">Service address</label>
+                    <input type="text" name="service_address" id="service_address"  value="{{requests.customer.address}}" class="form-control" required/>
+                  </div>
+                  
+                <div class="mb-3">
+                  <label class="form-label">Technician</label>
+                  <select name="technician" id="technician" class="form-select" required>
+                    <option value="" disabled selected>Choose a technician</option>
+                    {% for tech in technicians %}
+                      <option value="{{ tech.id }}">{{ tech.customer.user_id.first_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" name="schedule_date" id="schedule_date"  class="form-control" required/>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" name="start_time" id="start_time"  class="form-control" required/>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">End Time</label>
+                    <input type="time" name="end_time" id="end_time"  class="form-control" required/>
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

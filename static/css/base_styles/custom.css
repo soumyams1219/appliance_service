@@ -1,0 +1,37 @@
+body{
+    margin:0;
+    padding:0;
+}
+footer{
+    position:relative;
+    margin-top: 21%;
+    color: whitesmoke;
+    background-color: cadetblue;
+}
+footer p{
+    font-size: larger;
+}
+header{
+    margin-top: 0;
+    color: whitesmoke;
+    background-color:cadetblue;
+}
+
+.logo{
+    border-radius: 40%;
+    height:9em;
+    width:10em;
+}
+/*style for listing products */
+.parent{
+    display:flex;
+    padding:0;
+}
+.inner-div{
+    width:50%;
+    gap:3em;
+}
+/* style for complaint status viewing */
+.service_wrapper{
+    margin-top:5%;
+}

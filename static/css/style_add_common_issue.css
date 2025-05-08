@@ -1,0 +1,71 @@
+.form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /*position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);*/
+}
+
+.add-issue {
+    background-color: #28a745 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-issue:hover {
+    background-color: #218838 !important;
+    transform: scale(1.1);
+}
+
+.remove-issue {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.75rem 1.25rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.issue-input {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    height: auto;
+    min-height: 45px;
+}
+
+.form-select {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    height: auto;
+    min-height: 45px;
+}
+
+.input-group {
+    align-items: stretch;
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        margin: 1rem;
+        padding: 1rem;
+        width: 90%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

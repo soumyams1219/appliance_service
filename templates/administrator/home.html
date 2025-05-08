@@ -1,0 +1,93 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% block title %}
+<title>Welcome</title>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+{% for msg in messages %}
+<script>
+  alert('{{msg}}');
+</script>
+{% endfor %}
+{% endif %}
+<div class="parent">
+<div class="container min-vh-100 inner-div d-flex align-items-center justify-content-center">
+  <div class="card shadow-lg border-0 w-100" style="max-width: 420px;margin-bottom:170px">
+    <div class="card-body p-4 p-sm-5 bg-white rounded">
+      <h3 class="mb-4 text-center fw-bold">Add Product</h3>
+      <form method="post" action="{% url 'administrator:home' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="product" class="form-label">Product Name</label>
+          <input
+            type="text"
+            class="form-control p-3 rounded-3 shadow-sm"
+            id="product"
+            name="product"
+            placeholder="Enter product name"
+            required style="text-transform: capitalize;"
+          >
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-warning btn-lg shadow-sm">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container inner-div" style="padding-top: 60px;">
+  <input type="search" placeholder="Search product" onkeyup="searchProduct(this.value)">
+<table class="table" id="ptable">
+  <thead>
+    <tr>
+      <th scope="col">sl no</th>
+      <th scope="col">Product</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+   {% if products.count > 1 %}
+   {# set si = 1 #}
+   {% for product in products %}
+   <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{product.product}}</td>
+    <td><a href="{% url 'administrator:edit_product' %}?id={{product.id}}"><input type="button" class="btn btn-warning" value="Edit"></a></td>
+    <td><a href="{% url 'administrator:delete_product' product.id %}"><input type="button" class="btn btn-danger" value="Delete"></a></td>
+   </tr>
+   {# set si = si+1 #}
+   {% endfor %}
+   {% else %}
+   <tr>
+    <td colspan="4">No records to show</td>
+   </tr>
+   {% endif %}
+  </tbody>
+</table>
+</div>
+</div>
+<script>
+  function searchProduct(product){
+    var table = document.getElementById("ptable");
+    var filter = product.toLowerCase();
+    var row = document.getElementsByTagName("tr")
+    for(var i=0;i<row.length;i++){
+      var column = row[i].getElementsByTagName("td")[1];
+      if(column){
+        var columnvalue = column.textContent || column.innerText;
+        if(columnvalue.toLowerCase().indexOf(filter) > -1){
+          row[i].style.display = "";
+        }
+        else{
+          row[i].style.display = "none";
+        }
+      }
+      
+    }
+
+  }
+</script>
+{% endblock %}

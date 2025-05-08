@@ -1,0 +1,57 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% block title %}
+<title>Welcome</title>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+{% for msg in messages %}
+<script>
+  alert('{{msg}}');
+</script>
+{% endfor %}
+{% endif %}
+<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="card shadow-lg border-0 w-100" style="max-width: 510px;margin-bottom:50px">
+    <div class="card-body p-4 bg-white rounded">
+      <h3 class="mb-4 text-center fw-bold">Edit Technician</h3>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="product" class="form-label">Name</label>
+          <input type="text" class="form-control rounded-3 shadow-sm" id="name" name="name" value="{{user.first_name}}" placeholder="Enter name"required>
+        </div>
+        <div class="mb-3">
+            <label for="product" class="form-label">Address</label>
+            <input type="text" class="form-control rounded-3 shadow-sm" id="address" name="address" value="{{customer.address}}" placeholder="Enter address"required>
+          </div>
+          <div class="mb-3">
+            <label for="product" class="form-label">Pincode</label>
+            <input type="text" class="form-control rounded-3 shadow-sm" id="pincode" name="pincode" value="{{customer.pincode}}" placeholder="Enter pincode"required maxlength="6">
+          </div>
+          <div class="mb-3">
+            <label for="product" class="form-label">Email</label>
+            <input type="text" class="form-control rounded-3 shadow-sm" id="email" name="email" value="{{user.email}}" placeholder="Enter email"required>
+          </div>
+          <div class="mb-3">
+            <label for="product" class="form-label">Phone No</label>
+            <input type="text" class="form-control rounded-3 shadow-sm" id="phone" name="phone" value="{{customer.phone}}" placeholder="Enter phone no"required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="product" class="form-label">Qualification</label>
+            <input type="text" class="form-control rounded-3 shadow-sm" id="qualification" name="qualification" value="{{technician.qualification}}" placeholder="Enter qualification"required>
+          </div>
+          <div class="mb-3">
+            <label for="product" class="form-label">Years of Exp</label>
+            <input type="text" class="form-control rounded-3 shadow-sm" id="years_of_exp" name="years_of_exp" value="{{technician.years_of_exp}}" placeholder="Enter experience"required>
+          </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-warning btn-lg shadow-sm">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

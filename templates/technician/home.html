@@ -1,0 +1,89 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}
+<title>welcome</title>
+{% endblock %}
+{% block content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const productSelect = document.getElementById('product');
+        const complaintSelect = document.getElementById('complaint');
+        const allComplaintOptions = Array.from(complaintSelect.options);
+        const manualComplaintInput = document.getElementById('manualComplaint');
+
+        console.log("variable declaration finished");
+        productSelect.addEventListener('change', function () {
+            const selectedProductId = this.value;
+            console.log("product selected"+selectedProductId);
+            // Clear complaints
+            complaintSelect.innerHTML = '';
+
+            // Add the default option back
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.text = '--Choose Any--';
+            defaultOption.selected = true;
+            complaintSelect.appendChild(defaultOption);
+
+            // Filter and show only complaints related to selected product
+            allComplaintOptions.forEach(option => {
+                console.log(option.dataset.productId);
+                if (option.dataset.productId == selectedProductId) {
+                    console.log("selectedOption is"+option.dataset.productId);
+                    complaintSelect.appendChild(option);
+                }
+            });
+            const otherOption = document.createElement('option');
+            otherOption.value = 'other';
+            otherOption.setAttribute('id','other')
+            otherOption.text = 'Other';
+            complaintSelect.appendChild(otherOption);
+            manualComplaintInput.style.display = 'none';
+        });
+        complaintSelect.addEventListener('change', function () {
+            if (this.value === 'other') {
+                manualComplaintInput.style.display = 'block';
+                manualComplaintInput.setAttribute('required');
+            } else {
+                manualComplaintInput.style.display = 'none';
+                manualComplaintInput.removeAttribute('required');
+            }
+        });
+    });
+</script>
+<div class="container d-flex align-items-center justify-content-center min-vh-100 login-container">
+    <div class="col-md-6 col-lg-5 p-4 shadow rounded bg-white login-box">
+      <h3 class="mb-4 text-center">Service Request</h3>
+        <form method="post" action="{% url 'user:home' %}">
+        {% csrf_token %}
+            <div class="mb-3">
+                <label for="product" class="form-label">Select product</label>
+                <select type="text" class="form-control form-select shadow-sm rounded-3 border-0 p-3" id="product" name="product" required>
+                    <option value="">--Choose a product--</option>
+                    {% for product in products %}
+                        <option value="{{product.id}}">{{product.product}}</option>
+                    {% endfor %}    
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="complaint" class="form-label">Select complaint</label>
+                    <select class="form-control form-select" name="complaint" id="complaint" required>
+                        <option value="">--Choose Any--</option>
+                        {% for issue in issues %}
+                        <option data-product-id="{{issue.product.id}}" value="{{issue.id}}">{{issue.issue}}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="manualComplaint" id="manualComplaint" style="display: none;">
+            </div>
+            <div class="mb-3">
+                <input type="submit" class="btn btn-success" value="Book now">
+                <input type="reset" class="btn btn-danger" value="clear">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

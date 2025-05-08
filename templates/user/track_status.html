@@ -1,0 +1,47 @@
+{% extends 'user/base.html' %}
+{% block content %}
+{% if services %}
+<div class="container container-fluid d-flex gap-4 service_wrapper">
+{% for service in services %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{service.product.product}} {{service.issue.issue}}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Date of Request : {{service.date_requested}}</h6>
+      <p class="card-text">{{service.status}}</p>
+ 
+        {% if service.status == 'pending' %}
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-warning" style="width: 25%;">Pending</div>
+        </div>
+        {% elif service.status == 'rejected' %}
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-warning" style="width: 25%;">Pending</div>
+          <div class="progress-bar bg-danger" style="width: 25%;">Rejected</div>
+        </div>
+        {% elif service.status == 'accepted' %}
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-warning" style="width: 25%;">Pending</div>
+          <div class="progress-bar bg-success" style="width: 50%;">Accepted</div>
+          </div>
+        {% elif service.status == 'completed' %}
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-warning" style="width: 25%;">Pending</div>
+          <div class="progress-bar bg-info" style="width: 25%;">In Progress</div>
+          <div class="progress-bar bg-success" style="width: 50%;">Completed</div>
+          </div>
+        {% elif service.status == 'paid' %}
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-info" style="width: 50%;">Completed</div>
+          <div class="progress-bar bg-success" style="width: 50%;">Paid</div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="container container-md text-center">
+<h3>No service request exists</h3>
+</div>
+{% endif %}
+{% endblock %}

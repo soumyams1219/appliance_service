@@ -1,0 +1,49 @@
+{% extends 'user/base.html' %}
+{% block content %}
+{% if services %}
+<div class="container container-fluid d-flex gap-4 service_wrapper">
+{% for service in services %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{service.product.product}} {{service.issue.issue}}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Date of Request : {{service.date_requested}}</h6>
+      <p class="card-text">{{service.status}}</p>
+      {% if service.status == 'pending' or service.status == 'rejected' or service.status == 'accepted' or service.status == 'completed' %}
+      <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <progress class="progress-bar text-bg-warning" min="100"></progress>
+      </div>
+      {% endif %}
+      {% if service.status == 'rejected' or service.status == 'accepted' %}
+      <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+        {% if service.status == 'rejected' %}
+        <div class="progress-bar text-bg-warning" min="100"></div>
+        <div class="progress-bar text-bg-danger" min="100"></div>
+        {% else %}
+        <progress class="progress-bar text-bg-warning" min="100"></progress>
+        <progress class="progress-bar text-bg-success" min="100"></progress>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if service.status == 'completed' %}
+      <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+        <progress class="progress-bar text-bg-warning" min="100"></progress>
+        <progress class="progress-bar text-bg-info" min="100"></progress>
+        <progress class="progress-bar text-bg-success" min="100"></progress>
+      </div>
+      {% endif %}
+      {% if service.status == 'paid' %}
+      <div class="progress" role="progressbar" aria-label="Danger example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <progress class="progress-bar text-bg-info" min="100"></progress>
+        <progress class="progress-bar text-bg-success" min="100"></progress>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="container container-md text-center">
+<h3>No service request exists</h3>
+</div>
+{% endif %}
+{% endblock %}

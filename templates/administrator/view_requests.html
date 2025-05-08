@@ -1,0 +1,60 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% block title %}
+<title>Service Requests</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_requests.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h3 class="mb-4 text-center fw-bold text-white">Pending Service Requests</h3>
+
+    {% if requests.count > 0 %}
+    {% for request in requests %}
+    <!-- Request Card 1 -->
+    <form method="post">
+      {% csrf_token %}
+    <div class="card request-card mb-4">
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Product:</strong> {{request.product}}
+          </div>
+          <div class="col-md-6">
+            <strong>Issue:</strong> {{request.issue}}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Customer Name:</strong> {{request.customer.user_id.first_name}}
+          </div>
+          <div class="col-md-6">
+            <strong>Phone No:</strong> {{request.customer.phone}}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Address:</strong> {{request.customer.address}},{{request.customer.pincode}}
+          </div>
+          <div class="col-md-6">
+            <strong>Date of Request:</strong> {{request.date_requested}}
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <a href="{% url 'administrator:accept-request' %}?id={{request.id}}"><button type="button" name="action" value="accept_1" class="btn btn-warning">Accept</button></a>
+          <a href="{% url 'administrator:reject-request' request.id %}"><button type="button" name="action" value="reject_1" class="btn btn-danger">Reject</button></a>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endfor %}
+{% else %}
+   <div style="text-align: center;">
+    <h5>No records to show</h5>
+   </div>
+   {% endif %}
+</div>
+{% endblock %}

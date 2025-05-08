@@ -1,0 +1,35 @@
+{% load static %} <!--load static folder-->
+<!DOCTYPE html5>
+<html>
+<head>
+<!--Bootstrap CSS-->
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/base_styles/custom.css' %}">
+<!--Bootstrap JS-->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+{% block metadescription %} {% endblock %}
+{% block title %} {% endblock %}
+</head>
+<body>
+<!-- starting of document body-->
+<!-- For including header-->
+{% include 'technician/header.html' %}
+<!-- For including navbar-->
+{% include 'technician/navbar.html' %}
+<!-- For including content-->
+{% block content %}
+<!-- For content-->
+{% endblock %}
+<!-- For including footer-->
+<footer>
+    <!-- Footerr starts here-->
+    <div class="container container-md container-fluid">
+        <p class="text-center">2025&copy; All rights reserved. Website developed and maintained by New appliance services Team</p>
+        </div>
+     <!-- Footerr ends here-->   
+    </footer>
+<!-- Ending of decument body-->
+</body>
+</html>
