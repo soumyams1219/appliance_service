@@ -3,7 +3,7 @@ from .models import Customer,Role
 from django.contrib.auth.models import User
 from django.contrib import messages
 import random
-# Create your views here.
+
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 
