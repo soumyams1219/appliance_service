@@ -9,8 +9,8 @@ class Role(models.Model):
         verbose_name = 'role'
         verbose_name_plural = 'roles'
     def _str_(self):
-        return self.user_id.first_name+' '+self.role
-
+        return f"{self.user_id.first_name} - {self.role}"
+    
 class Customer(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     address = models.CharField(max_length=150)
